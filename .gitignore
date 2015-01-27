@@ -1,4 +1,5 @@
-node_modules
+node_modules/*
+!node_modules/ep_*
 settings.json
 !settings.json.template
 APIKEY.txt
