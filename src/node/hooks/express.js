@@ -86,8 +86,11 @@ exports.restartServer = function () {
           sessionStore = new RedisStore({ client: redis });
 
       app.use(session({
-            store: sessionStore,
-        secret: 'keyboard catsfasdlkjbif234of9oabe9p823bpwnbeuiaof9p8p34nweaf89pbf23wea8rp93'
+        store: sessionStore,
+        secret: 'keyboard catsfasdlkjbif234of9oabe9p823bpwnbeuiaof9p8p34nweaf89pbf23wea8rp93',
+        proxy: true,
+        resave: true,
+        saveUninitialized: true
     }));
   } else {
       console.info("No Redis Client for sessionStore");
