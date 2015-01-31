@@ -70,6 +70,30 @@ exports.restartServer = function () {
     server = http.createServer(app);
   }
 
+  //BEGIN Redis
+  console.info("Redis client init");
+  var redistogo_url = process.env.REDISTOGO_URL || "",
+      redis_port, redis_host, redis_options;
+
+  if (redistogo_url) {
+      redis = require('redis-url').connect(redistogo_url);
+  } else if (redis_port) {
+      redis = require('redis').createClient(redis_port, redis_host, redis_options);
+  }
+  if (redis) {
+      var session = require('express-session'),
+          RedisStore = require('connect-redis')(session),
+          sessionStore = new RedisStore({ client: redis });
+
+      app.use(session({
+            store: sessionStore,
+        secret: 'keyboard catsfasdlkjbif234of9oabe9p823bpwnbeuiaof9p8p34nweaf89pbf23wea8rp93'
+    }));
+  } else {
+      console.info("No Redis Client for sessionStore");
+  }
+  //END redis
+
   app.use(function (req, res, next) {
     // res.header("X-Frame-Options", "deny"); // breaks embedded pads
     if(settings.ssl){ // if we use SSL
