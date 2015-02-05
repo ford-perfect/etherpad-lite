@@ -75,12 +75,12 @@ exports.restartServer = function () {
   var redistogo_url = process.env.REDISTOGO_URL || "",
       redis_port, redis_host, redis_options;
 
-  if (redistogo_url) {
+  if (false){ //(redistogo_url) {
       redis = require('redis-url').connect(redistogo_url);
   } else if (redis_port) {
       redis = require('redis').createClient(redis_port, redis_host, redis_options);
   }
-  if (false) {
+  if (false) {//redis
       var session = require('express-session'),
           RedisStore = require('connect-redis')(session),
           sessionStore = new RedisStore({ client: redis });
