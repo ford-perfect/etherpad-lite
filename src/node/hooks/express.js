@@ -80,7 +80,7 @@ exports.restartServer = function () {
   } else if (redis_port) {
       redis = require('redis').createClient(redis_port, redis_host, redis_options);
   }
-  if (redis) {
+  if (false) {
       var session = require('express-session'),
           RedisStore = require('connect-redis')(session),
           sessionStore = new RedisStore({ client: redis });
